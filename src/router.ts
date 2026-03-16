@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from '@/pages/HomePage.vue'
-import LoginPage from '@/pages/Login.vue'
-import RegisterPage from '@/pages/Register.vue'
+import DeckDetailPage from '@/pages/DeckDetailPage.vue'
+import DeckFormPage from '@/pages/DeckFormPage.vue'
+import HomePage from '@/pages/HomePage.vue'
+import SignInPage from '@/pages/SignInPage.vue'
+import SignUpPage from '@/pages/SignUpPage.vue'
 import { useAuthStore } from '@/store/auth'
 
 declare module 'vue-router' {
@@ -16,23 +18,47 @@ export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
+  CREATE_DECK: '/decks/create',
+  DECK_DETAIL: '/decks/:id',
+  EDIT_DECK: '/decks/:id/edit',
 } as const
 
 const routes = [
   {
     path: ROUTES.HOME,
-    component: Home,
+    name: 'Home',
+    component: HomePage,
     meta: { requiresAuth: true },
   },
   {
     path: ROUTES.LOGIN,
-    component: LoginPage,
+    name: 'Login',
+    component: SignInPage,
     meta: { guestOnly: true },
   },
   {
     path: ROUTES.REGISTER,
-    component: RegisterPage,
+    name: 'Register',
+    component: SignUpPage,
     meta: { guestOnly: true },
+  },
+  {
+    path: ROUTES.CREATE_DECK,
+    name: 'CreateDeck',
+    component: DeckFormPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: ROUTES.DECK_DETAIL,
+    name: 'DeckDetail',
+    component: DeckDetailPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: ROUTES.EDIT_DECK,
+    name: 'EditDeck',
+    component: DeckFormPage,
+    meta: { requiresAuth: true },
   },
 ]
 
