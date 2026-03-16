@@ -28,12 +28,16 @@
     "vue-router": "4.6.4"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
     "@vfourny/node-toolkit": "1.1.6",
     "@vitejs/plugin-vue": "5.2.4",
+    "autoprefixer": "^10.4.27",
     "eslint": "9.39.3",
     "husky": "9.1.7",
     "lint-staged": "15.5.2",
+    "postcss": "^8.5.8",
     "prettier": "3.8.1",
+    "tailwindcss": "^4.2.1",
     "typescript": "5.9.3",
     "vite": "5.4.21",
     "vue-tsc": "3.2.5"

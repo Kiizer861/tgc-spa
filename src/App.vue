@@ -5,7 +5,7 @@
         <!-- Navbar visible seulement si connecté -->
         <HeaderBar v-if="isAuthenticated" />
 
-        <NLayoutContent>
+        <NLayoutContent class="overflow-auto">
           <RouterView />
         </NLayoutContent>
       </NLayout>
@@ -24,8 +24,8 @@ const authStore = useAuthStore()
 const { isAuthenticated } = storeToRefs(authStore)
 </script>
 
-<style>
-body {
-  padding: 0 20px;
+<style scoped>
+:deep(.n-layout-content) {
+  padding: 20px;
 }
 </style>
