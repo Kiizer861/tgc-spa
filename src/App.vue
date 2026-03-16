@@ -2,7 +2,9 @@
   <NConfigProvider>
     <NMessageProvider>
       <NLayout>
-        <HeaderBar />
+        <!-- Navbar visible seulement si connecté -->
+        <HeaderBar v-if="isAuthenticated" />
+
         <NLayoutContent>
           <RouterView />
         </NLayoutContent>
@@ -12,7 +14,14 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+
+import { useAuthStore } from '@/store/auth'
+
 import HeaderBar from './components/layout/HeaderBar.vue'
+
+const authStore = useAuthStore()
+const { isAuthenticated } = storeToRefs(authStore)
 </script>
 
 <style>
