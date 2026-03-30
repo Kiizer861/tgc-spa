@@ -83,14 +83,22 @@ const handleBack = () => {
 
         <!-- RG1 — Cartes en lecture seule -->
         <NCard>
-          <NFlex wrap :size="16" style="max-width: 780px; margin: 0 auto">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(5, 1fr);
+              gap: 16px;
+              max-width: 780px;
+              margin: 0 auto;
+            "
+          >
             <CardItem
               v-for="card in deckCards"
               :key="card.id"
               :card="card"
               size="md"
             />
-          </NFlex>
+          </div>
         </NCard>
       </div>
 

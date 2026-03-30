@@ -106,14 +106,20 @@ const handleDeleteDeck = async (deckId: number) => {
 
           <!-- Cartes du deck -->
           <NDivider style="margin: 12px 0" />
-          <NFlex wrap gap="8">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(5, 1fr);
+              gap: 4px;
+            "
+          >
             <CardItem
               v-for="card in getDeckCards(deck)"
               :key="card.id"
               :card="card"
-              size="sm"
+              size="md"
             />
-          </NFlex>
+          </div>
         </NCard>
       </div>
     </NSpin>
