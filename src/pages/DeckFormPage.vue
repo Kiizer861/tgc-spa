@@ -26,6 +26,9 @@ const isLoading = ref(false)
 const isSubmitting = ref(false)
 const error = ref<string | null>(null)
 
+// RG1 — Champ de recherche
+const searchQuery = ref('')
+
 const mode = computed<'create' | 'edit'>(() =>
   route.path.includes('edit') ? 'edit' : 'create',
 )
@@ -38,10 +41,20 @@ const formTitle = computed(() =>
   mode.value === 'create' ? 'Créer un deck' : 'Modifier le deck',
 )
 
-// RG2 — Compteur en temps réel
+// RG2 + RG3 — Filtrage en temps réel, cartes sélectionnées toujours visibles
+const filteredCards = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+  if (!query) return cards.value
+  const selectedSet = new Set(selectedCardIds.value)
+  return cards.value.filter(
+    (c) => c.name.toLowerCase().includes(query) || selectedSet.has(c.id),
+  )
+})
+
+// Compteur en temps réel
 const selectedCardCount = computed(() => selectedCardIds.value.length)
 
-// RG3 — Validation
+// Validation
 const isNameValid = computed(() => deckName.value.trim().length > 0)
 const isCardCountValid = computed(() => selectedCardCount.value === 10)
 const canSubmit = computed(
@@ -148,7 +161,7 @@ const handleCancel = () => {
         </NFormItem>
       </NForm>
 
-      <!-- RG2 — Compteur -->
+      <!-- Compteur -->
       <NFlex align="center" gap="12" style="margin-bottom: 16px">
         <NText>Sélectionner exactement 10 cartes</NText>
         <NText :type="counterType" style="font-weight: 600">
@@ -156,9 +169,17 @@ const handleCancel = () => {
         </NText>
       </NFlex>
 
-      <!-- RG1 — Grille sélectionnable -->
+      <!-- RG1 — Champ de recherche -->
+      <NInput
+        v-model:value="searchQuery"
+        placeholder="Rechercher une carte par nom..."
+        clearable
+        style="margin-bottom: 16px; max-width: 360px"
+      />
+
+      <!-- RG2 + RG3 — Grille filtrée, sélectionnées toujours visibles -->
       <CardGrid
-        :cards="cards"
+        :cards="filteredCards"
         :selected-cards="selectedCardIds"
         :max-selectable="10"
         size="sm"
@@ -167,7 +188,6 @@ const handleCancel = () => {
 
       <!-- Boutons -->
       <NFlex gap="12" style="margin-top: 24px">
-        <!-- RG3 — Désactivé si nom vide ou cartes ≠ 10 -->
         <NButton
           type="primary"
           :disabled="!canSubmit"
